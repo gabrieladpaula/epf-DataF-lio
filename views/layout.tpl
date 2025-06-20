@@ -3,20 +3,33 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema Bottle - {{title or 'Sistema'}}</title>
-    <link rel="stylesheet" href="/static/css/style.css" />
+    <title>DataFólio - {{title or 'Sistema'}}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
 
-    <div class="container">
-        {{!base}}  <!-- O conteúdo das páginas filhas virá aqui -->
+  <header>
+    <div class="header-left">
+        <div class="logo">DataFólio</div>
+        <span class="admin-badge">Administrador</span>
     </div>
+    <nav>
+        <a href="/users">Usuários</a>
+        <a href="/users/add">Adicionar Usuário</a>
+        <a href="/livros/add">Adicionar Livro</a>
+    </nav>
+</header>
+
+
+    <main class="container">
+        {{!base}}
+    </main>
 
     <footer>
-        <p>&copy; 2025, Meu Projeto. Todos os direitos reservados.</p>
+        <div class="container">
+            <p>&copy; 2025, DataFólio. Todos os direitos reservados.</p>
+        </div>
     </footer>
 
-    <!-- Scripts JS no final do body -->
-    <script src="/static/js/main.js"></script>
 </body>
 </html>
