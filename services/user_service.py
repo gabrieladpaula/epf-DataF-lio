@@ -1,42 +1,27 @@
-from bottle import request
-from models.user import UserModel, User
+import sqlite3
+import bcrypt
 
-class UserService:
-    def __init__(self):
-        self.user_model = UserModel()
+#Caminho do banco de dados
+DB_PATH = 'biblioteca.db'
 
+def create_user(nome, email, senha_plana, birthdate):
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
 
-    def get_all(self):
-        users = self.user_model.get_all()
-        return users
+        hashed_pass = bcrypt.hashpw(senha_plana.encode('utf-8'), bcrypt.gensalt())
 
+        cursor.execute(
+            'INSERT INTO usuarios (nome, email, senha_hash, birthdata) VALUES (?, ?, ?, ?)',
+            (nome, email, hashed_pass, birthdate)
+        )
 
-    def save(self):
-        last_id = max([u.id for u in self.user_model.get_all()], default=0)
-        new_id = last_id + 1
-        name = request.forms.get('name')
-        email = request.forms.get('email')
-        birthdate = request.forms.get('birthdate')
-
-        user = User(id=new_id, name=name, email=email, birthdate=birthdate)
-        self.user_model.add_user(user)
-
-
-    def get_by_id(self, user_id):
-        return self.user_model.get_by_id(user_id)
-
-
-    def edit_user(self, user):
-        name = request.forms.get('name')
-        email = request.forms.get('email')
-        birthdate = request.forms.get('birthdate')
-
-        user.name = name
-        user.email = email
-        user.birthdate = birthdate
-
-        self.user_model.update_user(user)
-
-
-    def delete_user(self, user_id):
-        self.user_model.delete_user(user_id)
+        conn.commit()
+        return True
+    except sqlite3.IntegrityError:
+        print(F"Erro de integridade: o email '{email}' já cadastrado.")
+        return False
+    finally:
+        if conn:
+            conn.close()
+        
