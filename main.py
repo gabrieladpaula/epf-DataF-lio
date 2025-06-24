@@ -1,5 +1,5 @@
 # Importa as ferramentas do Bottle e o novo user_service
-from bottle import route, run, template, request, redirect, static_file
+from bottle import route, run, template, request, redirect, static_file, response
 from services import user_service
 
 users = []  # Lista temporária para armazenar utilizadores
@@ -34,6 +34,36 @@ def add_user():
 @route('/static/<filepath:path>')
 def server_static(filepath):
     return static_file(filepath, root='./static') 
+
+@route('/login' , method='GET')
+def get_login():
+    return template('login')
+
+@route('/login' , method='POST')
+def post_login():
+
+# Processa os dados do formulário de login.
+    email = request.forms.get('email')
+    senha = request.forms.get('senha')
+
+    user = user_service.check_login(email, senha)
+
+    if user:
+        # O ultilizador existe e a senha está correta.
+        response.set_cookie("user_email", user['email'], secret= 'uma-chave-secreta-muito-segura')
+
+        # Redireciona para dashboard
+        return redirect('/users')
+    else:
+        # O e-mail não foi encontrado ou a senha esta errada.
+        return template('login' , error='E-mail ou senha inválidos. Por favor, tente novamente.')
+
+@route('/logout')
+def logout():
+     # Faz logout
+    response.delete_cookie("user_email")
+    # Redireciona para a página de login
+    return redirect('/login')
 
 #Rota para o servidor
 if __name__ == '__main__':
