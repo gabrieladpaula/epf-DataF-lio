@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DataFólio - {{title or 'Sistema'}}</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css?v=2">
+
 </head>
 <body>
 
@@ -16,7 +17,7 @@
     <nav>
         <a href="/users">Usuários</a>
         <a href="/users/add">Adicionar Usuário</a>
-        <a href="/livros/add">Adicionar Livro</a>
+        <a href="/books/add">Adicionar Livro</a>
     </nav>
 </header>
 
