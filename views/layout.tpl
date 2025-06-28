@@ -11,15 +11,28 @@
   <header>
     <div class="header-left">
         <div class="logo">DataFólio</div>
-        <span class="admin-badge">Administrador</span>
+        
+        %if current_user and current_user['role'] == 'admin':
+            <span class="admin-badge">Administrador</span>
+        %end
     </div>
+
     <nav>
-        <a href="/users">Usuários</a>
-        <a href="/users/add">Adicionar Usuário</a>
-        <a href="/livros/add">Adicionar Livro</a>
+        %if current_user:
+            <a href="/users">Dashboard</a>
+            <a href="/perfil">Meu Perfil</a>
+            
+            %if current_user['role'] == 'admin':
+                <a href="/livros/add">Adicionar Livro</a>
+            %end
+
+            <a href="/logout">Logout</a>
+        %else:
+            <a href="/login">Login</a>
+            <a href="/users/add">Registo</a>
+        %end
     </nav>
 </header>
-
 
     <main class="container">
         {{!base}}
