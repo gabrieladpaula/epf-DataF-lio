@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DataFólio - {{title or 'Sistema'}}</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css?v=2">
 </head>
 <body>
 
@@ -19,15 +19,18 @@
 
     <nav>
         %if current_user:
+            %# --- MENU PARA UTILIZADOR LOGADO ---
             <a href="/users">Dashboard</a>
             <a href="/perfil">Meu Perfil</a>
             
+            %# Mostra os links de admin apenas se o utilizador for um admin
             %if current_user['role'] == 'admin':
-                <a href="/livros/add">Adicionar Livro</a>
+                <a href="/books/add">Adicionar Livro</a>
             %end
 
             <a href="/logout">Logout</a>
         %else:
+            %# --- MENU PARA VISITANTE ---
             <a href="/login">Login</a>
             <a href="/users/add">Registo</a>
         %end

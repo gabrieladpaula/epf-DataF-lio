@@ -3,6 +3,7 @@ from services import user_service, auth_service
 from config import Config
 
 users = [] 
+books = []
 
 @route('/users')
 def list_users():
@@ -27,6 +28,28 @@ def add_user():
         return redirect('/login')
     else:
         return "Ocorreu um erro ao criar o utilizador. O e-mail fornecido já pode estar em uso."
+
+@route('/books')
+def list_books():
+    return template('books', books=books)
+
+@route('/books/add')
+def add_book_form():
+    return template('books_form', action='/books/add')
+
+@route('/books/add', method='POST')
+def add_book():
+    title = request.forms.get('title')
+    author = request.forms.get('author')
+    genre = request.forms.get('genre')
+    book = {
+        'id': len(books) + 1,
+        'title': title,
+        'author': author,
+        'genre': genre
+    }
+    books.append(book)
+    redirect('/books')
 
 @route('/login', method='GET')
 def get_login():
