@@ -18,3 +18,13 @@ def get_current_user():
     conn.close()
     
     return dict(user) if user else None
+
+def admin_required(f):
+    def wrapper(*args, **kwargs):
+        user = get_current_user()
+
+        if user and user['role'] == 'admin':
+            return f(*args, **kwargs)
+        else:
+            return redirect('/')
+    return wrapper    
