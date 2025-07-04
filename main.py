@@ -1,6 +1,7 @@
 from bottle import route, run, template, request, redirect, static_file, response
 from services import user_service, auth_service
 from config import Config
+from services import livro_service, genero_service
 
 users = [] 
 books = []
@@ -35,21 +36,26 @@ def list_books():
 
 @route('/books/add')
 def add_book_form():
-    return template('books_form', action='/books/add')
+
+    user = auth_service.get_current_user()
+
+    return template('books_form', action='/books/add', current_user=user)
 
 @route('/books/add', method='POST')
 def add_book():
-    title = request.forms.get('title')
-    author = request.forms.get('author')
-    genre = request.forms.get('genre')
-    book = {
-        'id': len(books) + 1,
-        'title': title,
-        'author': author,
-        'genre': genre
-    }
-    books.append(book)
-    redirect('/books')
+    titulo = request.forms.get('title')
+    autor = request.forms.get('author')
+    
+    sinopse_temporaria = "ADD sinopse."
+    caminho_pdf_temporario = f"{titulo.replace('', '_').lower()}.pdf"
+    
+    novo_livro_id = livro_service.create_book(titulo, autor, sinopse_temporaria, caminho_pdf_temporario)
+
+    if novo_livro_id:
+        return redirect('/books')
+    else:
+        return "Erro ao adicionar o livro."
+    
 
 @route('/login', method='GET')
 def get_login():
