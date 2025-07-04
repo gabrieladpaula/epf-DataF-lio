@@ -31,17 +31,20 @@ def add_user():
         return "Ocorreu um erro ao criar o utilizador. O e-mail fornecido já pode estar em uso."
 
 @route('/books')
+@admin_required
 def list_books():
     user = get_current_user()
     livros_reais = livro_service.get_all_books()
     return template('books', books=livros_reais, current_user=user)
 
 @route('/books/add')
+@admin_required
 def add_book_form():
     user = get_current_user()
     return template('books_form', action='/books/add', current_user=user)
 
 @route('/books/add', method='POST')
+@admin_required
 def add_book():
     titulo = request.forms.get('title')
     autor = request.forms.get('author')

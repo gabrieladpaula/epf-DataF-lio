@@ -26,5 +26,5 @@ def admin_required(f):
         if user and user['role'] == 'admin':
             return f(*args, **kwargs)
         else:
-            return redirect('/')
+            return redirect('/login')
     return wrapper    
