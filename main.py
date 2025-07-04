@@ -58,6 +58,37 @@ def add_book():
     else:
         return "Ocorreu um erro ao adicionar o livro."
 
+@route('/books/edit/<livro_id:int>')
+@admin_required
+def edit_book_form(livro_id):
+    book = livro_service.get_book_by_id(livro_id)
+    if book:
+        user = get_current_user()
+        return template('edit_book_form', book=book, current_user=user)
+    else:
+        return "Erro: Livro não encontrado."
+
+@route('/books/edit/<livro_id:int>', method='POST')
+@admin_required
+def edit_book_action(livro_id):
+    titulo = request.forms.get('title')
+    autor = request.forms.get('author')
+    sinopse = request.forms.get('sinopse')
+    sucesso = livro_service.update_book(livro_id, titulo, autor, sinopse)
+    if sucesso:
+        return redirect('/books')
+    else:
+        return "Ocorreu um erro ao tentar atualizar o livro."
+
+@route('/books/delete/<livro_id:int>', method='POST')
+@admin_required
+def delete_book_action(livro_id):
+    sucesso = livro_service.delete_book(livro_id)
+    if sucesso:
+        return redirect('/books')
+    else:
+        return "Ocorreu um erro ao tentar apagar o livro."
+
 @route('/login', method='GET')
 def get_login():
     user = get_current_user()
