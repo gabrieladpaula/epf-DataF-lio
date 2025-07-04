@@ -1,4 +1,4 @@
-from bottle import request
+from bottle import request, redirect
 import sqlite3
 from config import Config
 

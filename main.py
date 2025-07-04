@@ -1,19 +1,19 @@
 from bottle import route, run, template, request, redirect, static_file, response
-from services import user_service, auth_service
+from services import user_service, livro_service, genero_service
+from services.auth_service import get_current_user, admin_required
 from config import Config
-from services import livro_service, genero_service
 
 users = [] 
 books = []
 
 @route('/users')
 def list_users():
-    user = auth_service.get_current_user()
+    user = get_current_user()
     return template('users', users=users, current_user=user)
 
 @route('/users/add')
 def add_user_form():
-    user = auth_service.get_current_user()
+    user = get_current_user()
     return template('user_form', action='/users/add', user=None, current_user=user)
 
 @route('/users/add', method='POST')
@@ -32,34 +32,32 @@ def add_user():
 
 @route('/books')
 def list_books():
-    return template('books', books=books)
+    user = get_current_user()
+    livros_reais = livro_service.get_all_books()
+    return template('books', books=livros_reais, current_user=user)
 
 @route('/books/add')
 def add_book_form():
-
-    user = auth_service.get_current_user()
-
+    user = get_current_user()
     return template('books_form', action='/books/add', current_user=user)
 
 @route('/books/add', method='POST')
 def add_book():
     titulo = request.forms.get('title')
     autor = request.forms.get('author')
-    
-    sinopse_temporaria = "ADD sinopse."
-    caminho_pdf_temporario = f"{titulo.replace('', '_').lower()}.pdf"
+    sinopse_temporaria = "Sinopse a ser adicionada mais tarde."
+    caminho_pdf_temporario = f"{titulo.replace(' ', '_').lower()}.pdf"
     
     novo_livro_id = livro_service.create_book(titulo, autor, sinopse_temporaria, caminho_pdf_temporario)
 
     if novo_livro_id:
         return redirect('/books')
     else:
-        return "Erro ao adicionar o livro."
-    
+        return "Ocorreu um erro ao adicionar o livro."
 
 @route('/login', method='GET')
 def get_login():
-    user = auth_service.get_current_user()
+    user = get_current_user()
     return template('login', error=None, current_user=user)
 
 @route('/login', method='POST')
@@ -72,13 +70,19 @@ def post_login():
         response.set_cookie("user_email", user['email'], secret=Config.SECRET_KEY)
         return redirect('/users')
     else:
-        user = auth_service.get_current_user()
+        user = get_current_user()
         return template('login', error='E-mail ou senha inválidos.', current_user=user)
 
 @route('/logout')
 def logout():
     response.delete_cookie("user_email", secret=Config.SECRET_KEY)
     return redirect('/login')
+
+@route('/admin')
+@admin_required
+def admin_dashboard():
+    user = get_current_user()
+    return template('admin_dashboard', current_user=user) 
 
 @route('/static/<filepath:path>')
 def server_static(filepath):

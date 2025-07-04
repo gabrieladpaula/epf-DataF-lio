@@ -27,14 +27,13 @@
             <th>ID</th>
             <th>Título</th>
             <th>Autor</th>
-            <th>Gênero</th>
-        </tr>
+            
         % for book in books:
         <tr>
             <td>{{book["id"]}}</td>
-            <td>{{book["title"]}}</td>
-            <td>{{book["author"]}}</td>
-            <td>{{book["genre"]}}</td>
+            
+            <td>{{book["titulo"]}}</td>
+            <td>{{book["autor"]}}</td>
         </tr>
         % end
     </table>
