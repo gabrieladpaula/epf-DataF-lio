@@ -11,6 +11,14 @@
 body {
     background-color: #f9fafb;
     color: #111827;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    
+}
+
+body {
+    background-color: #f9fafb;
+    color: #111827;
     padding-top: 80px;
 }
 
@@ -104,8 +112,12 @@ th {
 tr:hover {
     background-color: #f9fafb;
 }
-main {
-    padding: 40px 80px; /* espaçamento top/bottom e lateral */
+main.container {
+    padding-top: 140px; 
+
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-bottom: 40px;
 }
 
 

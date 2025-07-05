@@ -24,6 +24,7 @@
             <label for="confirmar_senha">Confirmar Senha:</label>
             <input type="password" id="confirmar_senha" name="confirmar_senha" class="form-control" required>
         </div>
+        
         <button type="submit" class="btn btn-primary">Salvar</button>
         <a href="/" class="btn btn-secondary">Voltar</a>
     </form>

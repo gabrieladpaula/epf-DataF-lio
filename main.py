@@ -51,12 +51,14 @@ def add_user():
 
     if senha != confirmar_senha:
         return "Erro: As senhas não coincidem. Por favor, tente novamente."
+
     sucesso = user_service.create_user(nome, email, senha, birthdate)
     
     if sucesso:
         return redirect('/login')
     else:
         return "Ocorreu um erro ao criar o utilizador. O e-mail fornecido já pode estar em uso."
+    
 @route('/admin')
 @admin_required
 def admin_dashboard():
@@ -108,7 +110,7 @@ def edit_book_form(livro_id):
     if book:
         user = get_current_user()
         todos_os_generos = genero_service.get_all_genres()
-        generos_do_livro_ids = livro_service.get_genres_for_book(livro_id)
+        generos_do_livro_ids = livro_service.get_genres_por_book(livro_id)
         return template('edit_book_form', book=book, current_user=user, generos=todos_os_generos, generos_atuais=generos_do_livro_ids)
     else:
         return "Erro: Livro não encontrado."
@@ -119,8 +121,11 @@ def edit_book_action(livro_id):
     titulo = request.forms.get('title')
     autor = request.forms.get('author')
     sinopse = request.forms.get('sinopse')
-    sucesso = livro_service.update_book(livro_id, titulo, autor, sinopse)
+    caminho_pdf = f"{titulo.replace(' ', '_').lower()}.pdf"  
+    generos_selecionados = request.forms.getall('generos')  
+    sucesso = livro_service.update_book(livro_id, titulo, autor, sinopse, caminho_pdf)
     if sucesso:
+        livro_service.update_livro_generos(livro_id, generos_selecionados)
         return redirect('/books')
     else:
         return "Ocorreu um erro ao tentar atualizar o livro."

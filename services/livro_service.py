@@ -36,6 +36,17 @@ def get_all_books():
         if conn:
             conn.close()
 
+def get_all_generos():
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM generos")
+        return [dict(row) for row in cursor.fetchall()]
+    finally:
+        if conn:
+            conn.close()            
+
 def get_book_by_id(livro_id):
     try:
         conn = sqlite3.connect(DB_PATH)
@@ -51,7 +62,7 @@ def get_book_by_id(livro_id):
         if conn:
             conn.close()
 
-def update_book(livro_id, titulo, autor, sinopse):
+def update_book(livro_id, titulo, autor, sinopse, caminho_pdf):
     try:
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
@@ -67,6 +78,36 @@ def update_book(livro_id, titulo, autor, sinopse):
     finally:
         if conn:
             conn.close()
+
+def update_livro_generos(livro_id, novos_generos_ids):
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM livros_generos WHERE livro_id = ?", (livro_id,))     
+          
+        for genero_id in novos_generos_ids:
+            cursor.execute(
+                "INSERT INTO livros_generos (livro_id, genero_id) VALUES (?, ?)",
+                (livro_id, int(genero_id))
+            )
+            conn.commit() 
+        return True
+    except Exception as e:
+        print(f"Ocorreu um erro ao atualizar os géneros do livro: {e}")
+        return False
+    finally:
+        if conn:
+            conn.close()
+
+def get_genres_por_book(livro_id): 
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("SELECT genero_id FROM livros_generos WHERE livro_id = ?", (livro_id,))
+        return [row[0] for row in cursor.fetchall()]
+    finally:
+        if conn:
+            conn.close()     
 
 def delete_book(livro_id):
     try:
@@ -118,6 +159,7 @@ def search_books(query):
     except Exception as e:
         print(f"Ocorreu um erro ao buscar os livros: {e}")
         return []
+    
 
     finally:
         if conn:
