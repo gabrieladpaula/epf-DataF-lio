@@ -81,4 +81,22 @@ def delete_book(livro_id):
     finally:
         if conn:
             conn.close()
+
+def link_book_to_genres(livro_id, generos_ids):
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        for genero_id in generos_ids:
+            cursor.execute(
+                "INSERT INTO livros_generos (livro_id, genero_id) VALUES (?, ?)",
+                (livro_id, int(genero_id))
+            )
+        conn.commit()
+        return True
+    except Exception as e:
+        print(f"Ocorreu um erro ao ligar o livro aos géneros: {e}")
+        return False
+    finally:
+        if conn:
+            conn.close()
         
