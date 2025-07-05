@@ -1,18 +1,21 @@
-% rebase('layout', title='Adicionar Livro')
+%rebase('layout.tpl', title='Adicionar Novo Livro')
 
-<section class="form-section">
-    <h1>Adicionar Livro</h1>
+<div class="container">
+    <h2>Adicionar Novo Livro</h2>
+    <hr>
 
-    <form action="{{action}}" method="post">
-        <label for="title">Título:</label>
-        <input type="text" name="title" id="title" required>
-
-        <label for="author">Autor:</label>
-        <input type="text" name="author" id="author" required>
-
-        <label for="genre">Gênero:</label>
-        <input type="text" name="genre" id="genre" required>
-
-        <button type="submit" class="btn">Salvar</button>
+    <form action="/books/add" method="post">
+        <div class="mb-3">
+            <label for="title" class="form-label">Título:</label>
+            <input type="text" class="form-control" name="title" id="title" required>
+        </div>
+        <div class="mb-3">
+            <label for="author" class="form-label">Autor:</label>
+            <input type="text" class="form-control" name="author" id="author" required>
+        </div>
+        
+        <!-- Mais tarde, podemos adicionar aqui os campos para sinopse, upload de PDF e seleção de géneros -->
+        
+        <button type="submit" class="btn btn-primary">Adicionar Livro</button>
     </form>
-</section>
+</div>

@@ -1,5 +1,5 @@
 from bottle import route, run, template, request, redirect, static_file, response
-from services import user_service, livro_service, genero_service
+from services import user_service, livro_service, genero_service 
 from services.auth_service import get_current_user, admin_required
 from config import Config
 
@@ -121,6 +121,18 @@ def admin_dashboard():
 @route('/static/<filepath:path>')
 def server_static(filepath):
     return static_file(filepath, root='./static') 
+
+@route('/books/edit/<livro_id:int>', method='POST')
+@admin_required
+def edit_book_action(livro_id):
+    titulo = request.forms.get('title')
+    autor = request.forms.get('author')
+    sinopse = request.forms.get('sinopse')
+    sucesso = livro_service.update_book(livro_id, titulo, autor, sinopse)
+    if sucesso:
+        return redirect('/books')
+    else:
+        return "Ocorreu um erro ao tentar atualizar o livro."
 
 if __name__ == '__main__':
     run(host='localhost', port=8080, debug=True, reloader=True)

@@ -27,13 +27,19 @@
             <th>ID</th>
             <th>Título</th>
             <th>Autor</th>
-            
+            <th>Ações</th>
+        </tr>
         % for book in books:
         <tr>
             <td>{{book["id"]}}</td>
-            
             <td>{{book["titulo"]}}</td>
             <td>{{book["autor"]}}</td>
+            <td class="actions">
+                <a href="/books/edit/{{book['id']}}" class="btn btn-sm btn-edit">Editar</a>
+                <form action="/books/delete/{{book['id']}}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-danger">Apagar</button>
+                </form>
+            </td>
         </tr>
         % end
     </table>
