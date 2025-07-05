@@ -46,13 +46,17 @@ def add_user():
     nome = request.forms.get('name')
     email = request.forms.get('email')
     birthdate = request.forms.get('birthdate')
-    password = "senha123"
-    sucesso = user_service.create_user(nome, email, password, birthdate)
+    senha = request.forms.get('senha')
+    confirmar_senha = request.forms.get('confirmar_senha')
+
+    if senha != confirmar_senha:
+        return "Erro: As senhas não coincidem. Por favor, tente novamente."
+    sucesso = user_service.create_user(nome, email, senha, birthdate)
+    
     if sucesso:
         return redirect('/login')
     else:
         return "Ocorreu um erro ao criar o utilizador. O e-mail fornecido já pode estar em uso."
-
 @route('/admin')
 @admin_required
 def admin_dashboard():
@@ -129,6 +133,21 @@ def delete_book_action(livro_id):
         return redirect('/books')
     else:
         return "Ocorreu um erro ao tentar apagar o livro."
+    
+@route('/catalogo')
+def catalogo_livros():
+    user = get_current_user()
+    termo_busca = request.query.get('busca')
+
+    if termo_busca:
+        lista_de_livros = livro_service.search_books(termo_busca)
+    else:
+        lista_de_livros = livro_service.get_all_books()
+
+    return template('catalogo',
+                    current_user=user,
+                    books=lista_de_livros,
+                    termo_busca=termo_busca)
 
 @route('/static/<filepath:path>')
 def server_static(filepath):

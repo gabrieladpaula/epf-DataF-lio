@@ -99,4 +99,27 @@ def link_book_to_genres(livro_id, generos_ids):
     finally:
         if conn:
             conn.close()
+
+def search_books(query):
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+
+        search_term = f"%{query}%"
+        cursor.execute(
+            "SELECT * FROM livros WHERE titulo LIKE ? OR autor LIKE ?",
+            (search_term, search_term)
+        )
+        
+        books = cursor.fetchall()
+        return [dict(row) for row in books]
+
+    except Exception as e:
+        print(f"Ocorreu um erro ao buscar os livros: {e}")
+        return []
+
+    finally:
+        if conn:
+            conn.close()            
         
