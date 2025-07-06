@@ -10,7 +10,7 @@ books = []
 def index():
     user = get_current_user()
     if user:
-        return redirect('/users')
+        return redirect('/catalago')
     else:
         return redirect('/login')
 
@@ -26,7 +26,7 @@ def post_login():
     user = user_service.check_login(email, senha)
     if user:
         response.set_cookie("user_email", user['email'], secret=Config.SECRET_KEY)
-        return redirect('/users')
+        return redirect('/catalogo')
     else:
         user = get_current_user()
         return template('login', error='E-mail ou senha inválidos.', current_user=user)
@@ -91,10 +91,12 @@ def add_book():
     titulo = request.forms.get('title')
     autor = request.forms.get('author')
     generos_selecionados = request.forms.getall('generos')
-    sinopse_temporaria = "Sinopse a ser adicionada mais tarde."
-    caminho_pdf_temporario = f"{titulo.replace(' ', '_').lower()}.pdf"
+    sinopse = request.forms.get('sinopse')
+
+    nome_arquivo = f"{titulo.replace(' ', '_').lower()}.pdf"
+    caminho_pdf = f"/static/pdfs/{nome_arquivo}"
     
-    novo_livro_id = livro_service.create_book(titulo, autor, sinopse_temporaria, caminho_pdf_temporario)
+    novo_livro_id = livro_service.create_book(titulo, autor, sinopse, caminho_pdf)
 
     if novo_livro_id:
         if generos_selecionados:
@@ -121,8 +123,11 @@ def edit_book_action(livro_id):
     titulo = request.forms.get('title')
     autor = request.forms.get('author')
     sinopse = request.forms.get('sinopse')
-    caminho_pdf = f"{titulo.replace(' ', '_').lower()}.pdf"  
-    generos_selecionados = request.forms.getall('generos')  
+    generos_selecionados = request.forms.getall('generos')
+
+    nome_arquivo = f"{titulo.replace(' ', '_').lower()}.pdf"
+    caminho_pdf = f"/static/pdfs/{nome_arquivo}"
+    
     sucesso = livro_service.update_book(livro_id, titulo, autor, sinopse, caminho_pdf)
     if sucesso:
         livro_service.update_livro_generos(livro_id, generos_selecionados)
