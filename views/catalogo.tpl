@@ -20,10 +20,11 @@
             </form>
         </div>
     </div>
+
     <div class="row">
         % if not books:
             <div class="col-md-12">
-                <p>Nenhum livro encontrado para a busca: '{{ termo_busca }}'.</p>
+                <p>Nenhum livro encontrado.</p>
             </div>
         % else:
             % for book in books:
@@ -34,16 +35,17 @@
                         </a>
                         <div class="card-body">
                             <h4 class="card-title">
-                                <a href="#">{{ book.get('titulo', 'Título Indisponível') }}</a>
+                                <a href="#">{{! book.get('titulo', 'Título Indisponível') }}</a>
                             </h4>
-                            <h5>{{ book.get('autor', 'Autor Desconhecido') }}</h5>
+                            <h5>{{! book.get('autor', 'Autor Desconhecido') }}</h5>
                             <p class="card-text">
-                                Sinopse do livro virá aqui...
+                                {{! book.get('sinopse', 'Sinopse não disponível.') }}
                             </p>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                        </div>
+                            
+                            <a href="{{! book.get('caminho_pdf', '#') }}" target="_blank" class="btn btn-success mt-2">
+                                Acessar PDF
+                            </a>
+                            </div>
                     </div>
                 </div>
             % end

@@ -1,4 +1,4 @@
-%rebase('layout.tpl', title='Adicionar Novo Livro')
+% rebase('layout.tpl', title='Adicionar Novo Livro')
 
 <div class="container">
     <h2>Adicionar Novo Livro</h2>
@@ -17,15 +17,25 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Géneros:</label>
+            <label for="sinopse" class="form-label">Sinopse:</label>
+            <textarea class="form-control" name="sinopse" id="sinopse" rows="5"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="caminho_pdf" class="form-label">Caminho do PDF:</label>
+            <input type="text" class="form-control" name="caminho_pdf" id="caminho_pdf" placeholder="Ex: /static/pdfs/nome_do_livro.pdf" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Gêneros:</label>
             <div>
                 % for genero in generos:
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="generos" id="genero_{{genero['id']}}" value="{{genero['id']}}">
-                        <label class="form-check-label" for="genero_{{genero['id']}}">
-                            {{genero['nome']}}
-                        </label>
-                    </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="generos" id="genero_{{genero['id']}}" value="{{genero['id']}}">
+                    <label class="form-check-label" for="genero_{{genero['id']}}">
+                        {{genero['nome']}}
+                    </label>
+                </div>
                 % end
             </div>
         </div>

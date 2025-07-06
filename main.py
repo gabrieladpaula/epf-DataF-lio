@@ -1,18 +1,14 @@
-from bottle import route, run, template, request, redirect, static_file, response
+from bottle import route, run, template, request, redirect, static_file, response, BaseRequest
 from services import user_service, livro_service, genero_service
 from services.auth_service import get_current_user, admin_required
 from config import Config
+import os
 
-users = [] 
-books = []
+BaseRequest.MEMFILE_MAX = 10 * 1024 * 1024
 
 @route('/')
 def index():
-    user = get_current_user()
-    if user:
-        return redirect('/catalago')
-    else:
-        return redirect('/login')
+    return redirect('/catalogo')
 
 @route('/login', method='GET')
 def get_login():
@@ -69,7 +65,7 @@ def admin_dashboard():
 @admin_required
 def list_users():
     user = get_current_user()
-    return template('users', users=users, current_user=user)
+    return template('users', users=[], current_user=user)
 
 @route('/books')
 @admin_required
@@ -90,13 +86,12 @@ def add_book_form():
 def add_book():
     titulo = request.forms.get('title')
     autor = request.forms.get('author')
-    generos_selecionados = request.forms.getall('generos')
     sinopse = request.forms.get('sinopse')
+   
+    caminho_pdf_db = request.forms.get('caminho_pdf')
+    generos_selecionados = request.forms.getall('generos')
 
-    nome_arquivo = f"{titulo.replace(' ', '_').lower()}.pdf"
-    caminho_pdf = f"/static/pdfs/{nome_arquivo}"
-    
-    novo_livro_id = livro_service.create_book(titulo, autor, sinopse, caminho_pdf)
+    novo_livro_id = livro_service.create_book(titulo, autor, sinopse, caminho_pdf_db)
 
     if novo_livro_id:
         if generos_selecionados:
@@ -123,10 +118,8 @@ def edit_book_action(livro_id):
     titulo = request.forms.get('title')
     autor = request.forms.get('author')
     sinopse = request.forms.get('sinopse')
+    caminho_pdf = request.forms.get('caminho_pdf')
     generos_selecionados = request.forms.getall('generos')
-
-    nome_arquivo = f"{titulo.replace(' ', '_').lower()}.pdf"
-    caminho_pdf = f"/static/pdfs/{nome_arquivo}"
     
     sucesso = livro_service.update_book(livro_id, titulo, autor, sinopse, caminho_pdf)
     if sucesso:

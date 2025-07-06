@@ -20,7 +20,7 @@
     <nav>
         %if current_user:
             %# --- MENU PARA UTILIZADOR LOGADO ---
-            <a href="/users">Dashboard</a>
+            <a href="/catalogo">Catalogo</a>
             <a href="/perfil">Meu Perfil</a>
             
             %# Mostra os links de admin apenas se o utilizador for um admin
