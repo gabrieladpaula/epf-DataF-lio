@@ -26,6 +26,8 @@
             %# Mostra os links de admin apenas se o utilizador for um admin
             %if current_user['role'] == 'admin':
                 <a href="/books/add">Adicionar Livro</a>
+                <a href="/users">Gerenciar Usuários</a>
+                <a href="/books/add">Adicionar Livro</a>
             %end
 
             <a href="/logout">Logout</a>

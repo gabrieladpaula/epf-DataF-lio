@@ -4,6 +4,7 @@ from services.auth_service import get_current_user, admin_required
 from config import Config
 import os
 
+
 BaseRequest.MEMFILE_MAX = 10 * 1024 * 1024
 
 @route('/')
@@ -65,7 +66,9 @@ def admin_dashboard():
 @admin_required
 def list_users():
     user = get_current_user()
-    return template('users', users=[], current_user=user)
+
+    todos_os_usuarios = user_service.get_all_users()
+    return template('user_list', users=todos_os_usuarios, current_user=user)
 
 @route('/books')
 @admin_required
@@ -151,6 +154,8 @@ def catalogo_livros():
                     current_user=user,
                     books=lista_de_livros,
                     termo_busca=termo_busca)
+
+
 
 @route('/static/<filepath:path>')
 def server_static(filepath):
