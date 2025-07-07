@@ -37,30 +37,62 @@ poo-python-bottle-template/
 Contém as classes responsáveis por lidar com as rotas da aplicação. Exemplos:
 - `user_controller.py`: rotas para listagem, adição, edição e remoção de usuários.
 - `base_controller.py`: classe base com utilitários comuns.
+- __int__.py: arquivo que inicializa o módulo de controladores.
 
 ### `models/`
 Define as classes que representam os dados da aplicação. Exemplo:
-- `user.py`: classe `User`, com atributos como `id`, `name`, `email`, etc.
+- pessoa.py: A classe base Pessoa, que criamos para aplicar o pilar da Herança. Ela contém os atributos e métodos comuns que podem ser herdados por outras classes, como a User.
+-user.py: A classe User, que herda de Pessoa. Ela representa um usuário do sistema, encapsulando todos os seus dados, como id, nome, email, role, etc.
+-livro.py: A classe Livro, que modela um livro do nosso acervo. Ela contém os atributos que definem um livro, como id, titulo, autor e sinopse.
+-genero.py: A classe Genero, que representa um gênero literário. Ela define os atributos de um gênero, como id e nome.afo
 
 ### `services/`
 Responsável por salvar, carregar e manipular dados usando arquivos JSON. Exemplo:
-- `user_service.py`: contém métodos como `get_all`, `add_user`, `delete_user`.
+-auth_service.py: Controla a sessão do usuário e as permissões de acesso (@admin_required).
+-genero_service.py: Busca a lista de todos os gêneros do banco de dados.
+-livro_service.py: Executa todas as operações dos livros (CRUD, busca) e corrige a exibição de acentos.
+-user_service.py: Gerencia os usuários: criação com senha segura (bcrypt), validação de login e listagem.
+
 
 ### `views/`
 Contém os arquivos `.tpl` utilizados pelo Bottle como páginas HTML:
-- `layout.tpl`: estrutura base com navegação e bloco `content`.
-- `users.tpl`: lista os usuários.
-- `user_form.tpl`: formulário para adicionar/editar usuário.
+-layout.tpl: O template mestre que define a estrutura principal (cabeçalho, menu, rodapé) de --todas as outras páginas.
+-catalogo.tpl: A vitrine do projeto. Exibe o catálogo público de livros, a barra de busca e -os links para os PDFs.
+-login.tpl: Contém o formulário para que os usuários possam fazer o login.
+-user_form.tpl: Contém o formulário para o registro de novos usuários na plataforma.
+-admin_dashboard.tpl: A página inicial (dashboard) do painel do administrador.
+-books.tpl: A tabela do painel de admin que lista todos os livros para gerenciamento.
+-books_form.tpl: O formulário que o administrador usa para adicionar um novo livro.
+-edit_book_form.tpl: O formulário que o administrador usa para editar um livro existente.
+-user_list.tpl: A tabela específica do painel de admin que exibe a lista de todos os usuários -cadastrados.
+-users.tpl: Template principal do dashboard do admin, que pode ser usado para listar informações gerais.
+-visitor.tpl: Template para visitantes não logados, provavelmente a página inicial original do template.
+-helper-final.tpl: Um template auxiliar, provavelmente vindo do material de exemplo do curso.
+
 
 ### `static/`
 Arquivos estáticos como:
-- `css/style.css`: estilos básicos.
-- `js/main.js`: scripts JS opcionais.
-- `img/BottleLogo.png`: exemplo de imagem.
+-css/: Contém as folhas de estilo que definem toda a aparência e o design do site.
+     -style.css: O arquivo principal com toda a identidade visual do projeto (cores, fontes, layout).
+     -helper.css: Um arquivo de estilos auxiliar, provavelmente do template original.
+-img/: Pasta para guardar as imagens usadas no site.
+     -BottleLogo.png: Imagem de exemplo do framework Bottle.
+-pdfs/: A pasta onde os arquivos PDF dos livros são armazenados para que os usuários possam acessá-los através dos links no catálogo.
 
 ### `data/`
-Armazena os arquivos `.json` que simulam o banco de dados:
-- `users.json`: onde os dados dos usuários são persistidos.
+Armazena os arquivos `SQLite` que simulam o banco de dados:
+-usuarios: Armazena os dados dos usuários cadastrados, incluindo nome, email, senha criptografada (bcrypt) e role (permissão de user ou admin).
+-livros: Tabela principal que contém as informações de cada livro, como título, autor, sinopse e o caminho para o arquivo PDF ou link externo.
+-generos: Uma lista de todos os gêneros literários disponíveis no sistema.
+-livros_generos: Tabela de ligação que implementa a relação Muitos-para-Muitos, conectando um livro a múltiplos gêneros.
+-historico_downloads: Estrutura para armazenar o histórico de quais usuários acessaram quais livros.
+
+📘 Diagrama de Classes
+
+![image](https://github.com/user-attachments/assets/852fcf9b-9e3a-4294-b959-82997ecc322b)
+
+
+
 
 ---
 
@@ -69,8 +101,7 @@ Armazena os arquivos `.json` que simulam o banco de dados:
 1. Crie o ambiente virtual na pasta fora do seu projeto:
 ```bash
 python -m venv venv
-source venv/bin/activate  # Linux/Mac
-venv\\Scripts\\activate     # Windows
+venv\\Scripts\\activate     
 ```
 
 2. Entre dentro do seu projeto criado a partir do template e instale as dependências:
