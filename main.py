@@ -14,10 +14,16 @@ def index():
 @route('/login', method='GET')
 def get_login():
     user = get_current_user()
-    return template('login', error=None, current_user=user, pagina_class='pagina-login')
+    return template('login',
+                error=None,
+                current_user=user,
+                pagina_class='pagina-login',
+                pagina_login=True,
+                pagina_cadastro=False)
 
 @route('/login', method='POST')
 def post_login():
+
     email = request.forms.get('email')
     senha = request.forms.get('senha')
     user = user_service.check_login(email, senha)
@@ -26,7 +32,12 @@ def post_login():
         return redirect('/catalogo')
     else:
         user = get_current_user()
-        return template('login', error='E-mail ou senha inválidos.', current_user=user, pagina_class='pagina-login')
+        return template('login',
+                error='E-mail ou senha inválidos.',
+                current_user=user,
+                pagina_class='pagina-login',
+                pagina_login=True,
+                pagina_cadastro=False)
 
 @route('/logout')
 def logout():
@@ -35,8 +46,14 @@ def logout():
 
 @route('/users/add', method='GET')
 def add_user_form():
-    user = get_current_user()
-    return template('user_form', action='/users/add', user=None, current_user=user, pagina_class='pagina-user')
+    return template('user_form',
+                action='/users/add',
+                user={},  # corrigido aqui
+                current_user=get_current_user(),
+                pagina_class='pagina-user',
+                pagina_login=False,
+                pagina_cadastro=True)
+
 
 @route('/users/add', method='POST')
 def add_user():
@@ -151,9 +168,11 @@ def catalogo_livros():
         lista_de_livros = livro_service.get_all_books()
 
     return template('catalogo',
-                    current_user=user,
-                    books=lista_de_livros,
-                    termo_busca=termo_busca)
+                current_user=user,
+                books=lista_de_livros,
+                termo_busca=termo_busca,
+                pagina_login=False,
+                pagina_cadastro=False)
 
 
 
