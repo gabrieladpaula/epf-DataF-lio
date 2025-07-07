@@ -1,222 +1,357 @@
-/*books*/
-
-/* 🔥 Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
-}
-
-body {
-    background-color: #f9fafb;
-    color: #111827;
+/* ========== ESTILO ISOLADO PARA A TELA DE CATÁLOGO ========== */
+.pagina-catalogo {
     font-family: 'Segoe UI', sans-serif;
+    background-color: #fefefe;
+    padding: 0;
     margin: 0;
-    
 }
 
-body {
-    background-color: #f9fafb;
-    color: #111827;
-    padding-top: 80px;
-}
-
-/* 🔝 Header */
-header {
+/* NAVBAR SUPERIOR */
+.pagina-catalogo .navbar-custom {
     width: 100%;
-    background: linear-gradient(90deg, #5a189a, #7b2cbf, #3b82f6);
-    padding: 20px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 999;
-}
-
-header .logo {
-    font-size: 24px;
-    font-weight: 700;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
     color: white;
+    padding: 16px 40px;
     display: flex;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    margin-top: -13px;
+}
+
+.pagina-catalogo .navbar-container {
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 8px;
 }
 
-nav {
-    display: flex;
-    gap: 24px;
+.pagina-catalogo .logo {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
 }
 
-nav a {
+.pagina-catalogo .nav-links a {
     color: white;
     text-decoration: none;
+    margin-left: 0.5rem;
     font-weight: 500;
-    padding: 8px 16px;
-    border-radius: 8px;
-    transition: 0.3s;
+    transition: color 0.3s ease;
+    margin-right: 62px;
 }
 
-nav a:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+.pagina-catalogo .nav-links a:hover {
+    color: #ffd700;
 }
 
-/* 📑 Conteúdo */
-h1 {
-    color: #5a189a;
-    margin: 20px 0;
+/* CABEÇALHO COM BANNER */
+.pagina-catalogo .header-banner {
+    background: linear-gradient(to right, #ff8000, #ffa500);
+    text-align: center;
+    color: white;
+    padding: 60px 20px 40px 20px;
+    border-radius: 0 0 24px 24px;
+    width: 98%;
+}
+
+.pagina-catalogo .header-banner .icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.pagina-catalogo .header-banner h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.pagina-catalogo .header-banner p {
+    font-size: 1.2rem;
+}
+
+/* CAMPO DE BUSCA */
+.pagina-catalogo .search-bar {
+    margin: 30px auto;
+    max-width: 600px;
     display: flex;
+    background: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     align-items: center;
-    gap: 8px;
 }
 
-.btn {
-    display: inline-block;
-    background: #7b2cbf;
+.pagina-catalogo .search-bar input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 50px;
+}
+
+.pagina-catalogo .search-bar button {
+    background: #ff6600;
+    border: none;
     color: white;
     padding: 10px 16px;
-    border-radius: 10px;
-    text-decoration: none;
-    margin-bottom: 20px;
-    transition: 0.3s;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-left: 10px;
 }
 
-.btn:hover {
-    background-color: #5a189a;
+.pagina-catalogo .search-bar button:hover {
+    background-color: #e05500;
 }
 
-/* 🏛️ Tabela */
-table {
-    width: 100%;
-    border-collapse: collapse;
+/* BOTÕES DE CATEGORIA */
+.pagina-catalogo .filtros-genero {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.pagina-catalogo .btn-genero {
+    background: #eeeeee;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pagina-catalogo .btn-genero:hover {
+    background: #ff9900;
+    color: white;
+}
+
+.pagina-catalogo .btn-genero.ativo {
+    background: #ff6600;
+    color: white;
+    font-weight: bold;
+}
+
+/* MENSAGEM DE NENHUM RESULTADO */
+.pagina-catalogo .empty-message {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #888;
+    margin-top: 30px;
+}
+
+/* EXEMPLO DE CARD DE LIVRO (opcional) */
+.pagina-catalogo .book-card {
     background: white;
     border-radius: 12px;
-    overflow: hidden;
+    padding: 20px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-
-th, td {
-    padding: 14px;
-    text-align: left;
-    border-bottom: 1px solid #f1f1f1;
-}
-
-th {
-    background-color: #facc15;
-    color: #1f2937;
-}
-
-tr:hover {
-    background-color: #f9fafb;
-}
-main.container {
-    padding-top: 140px; 
-
-    padding-left: 80px;
-    padding-right: 80px;
-    padding-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 
-/*users*/
+/* === Estilo isolado para a página de login === */
+.pagina-login {
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
 
+.login-box {
+    background-color: white;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 420px;
+}
+
+.login-box h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.login-box label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #444;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.login-box button {
+    width: 100%;
+    background-color: #6a11cb;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.login-box button:hover {
+    background-color: #5310a5;
+}
+
+.login-footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.login-footer a {
+    color: #6a11cb;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+.login-box {
+    background-color: white;
+    padding: 40px 30px;
+    border-radius: 12px;
+    border: 13px solid #fca311; /* Borda laranja */
+    box-shadow: 0 0 0 4px #fca31180, 0 6px 20px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 420px;
+}
+
+/* ========== BODY GERAL ========== */
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f9f9fb;
+  font-family: 'Inter', sans-serif;
+  background-color: #f8f8fa;
+  min-height: 100vh;
 }
 
-main.dashboard {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 0 20px;
-}
-
-/* === CARDS === */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 24px;
-  margin-bottom: 30px;
-}
-
-.card {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-}
-
-.card h3 {
-  margin: 0 0 10px;
-  color: #5E35B1;
-  font-size: 18px;
-}
-
-.card p {
-  font-size: 28px;
-  margin: 0;
-  font-weight: bold;
-}
-
-.card .info {
-  display: block;
-  margin-top: 8px;
-  font-size: 14px;
-  color: #777;
-}
-
-/* === BOTÕES === */
-.dashboard-buttons {
+/* SOMENTE PÁGINAS QUE PRECISAM FICAR CENTRALIZADAS */
+.pagina-login .page-content {
   display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 40px;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  height: 100%;
 }
 
-.dashboard-buttons .btn {
-  background: linear-gradient(90deg, #7B1FA2, #512DA8);
-  color: #fff;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
+
+/* Rodapé fixado no fim da tela */
+.rodape {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #999;
+  padding: 1rem 0;
+  background: none;
+}
+/* Estilização específica da tela de adicionar usuário */
+.user-actions {
+  display: flex;
+  justify-content: center;
+  gap: 2rem; /* maior separação */
+  margin-top: 2rem;
+}
+
+.user-actions .btn {
+  padding: 0.7rem 2.2rem;
+  border-radius: 10px;
   font-weight: 600;
+  font-size: 1rem;
+  border: none;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.2s;
 }
 
-.dashboard-buttons .btn:hover {
-  background: linear-gradient(90deg, #6A1B9A, #4527A0);
+/* Botão roxo */
+.salvar-btn {
+  background-color: #5e2ca5;
+  color: #fff;
 }
 
-/* === EXTRAS === */
-.extras {
-  background: #fff;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+.salvar-btn:hover {
+  background-color: #4b2290;
 }
 
-.extras h3 {
-  margin-top: 0;
-  font-size: 20px;
-  color: #5E35B1;
-}
-
-.extras p, .extras li {
-  font-size: 15px;
+/* Botão cinza */
+.voltar-btn {
+  background-color: #d1d1d1;
   color: #333;
-  margin: 6px 0;
+  text-decoration: none;
 }
 
+.voltar-btn:hover {
+  background-color: #bbb;
+}
+
+/* ========== TELA DE LOGIN ========== */
+.pagina-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* ocupa 100% da altura da tela */
+    width: 100vw;       /* ocupa 100% da largura da tela */
+    background-color: #f5f5f5;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.login-box {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border: 5px solid orange;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* ========== TELA DE ADICIONAR USUARIO ========== */
+.pagina-cadastro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100vw;
+    background-color: #f5f5f5;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.cadastro-box {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border: 4px solid orange;
+    width: 100%;
+    max-width: 450px;
+    box-sizing: border-box;
+}
 

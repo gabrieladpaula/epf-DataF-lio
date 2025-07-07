@@ -14,7 +14,7 @@ def index():
 @route('/login', method='GET')
 def get_login():
     user = get_current_user()
-    return template('login', error=None, current_user=user)
+    return template('login', error=None, current_user=user, pagina_class='pagina-login')
 
 @route('/login', method='POST')
 def post_login():
@@ -26,7 +26,7 @@ def post_login():
         return redirect('/catalogo')
     else:
         user = get_current_user()
-        return template('login', error='E-mail ou senha inválidos.', current_user=user)
+        return template('login', error='E-mail ou senha inválidos.', current_user=user, pagina_class='pagina-login')
 
 @route('/logout')
 def logout():
@@ -36,7 +36,7 @@ def logout():
 @route('/users/add', method='GET')
 def add_user_form():
     user = get_current_user()
-    return template('user_form', action='/users/add', user=None, current_user=user)
+    return template('user_form', action='/users/add', user=None, current_user=user, pagina_class='pagina-user')
 
 @route('/users/add', method='POST')
 def add_user():
@@ -163,3 +163,6 @@ def server_static(filepath):
 
 if __name__ == '__main__':
     run(host='localhost', port=8080, debug=True, reloader=True)
+
+
+
