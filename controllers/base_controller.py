@@ -24,14 +24,6 @@ class BaseController:
         return self.render('helper-final')
 
 
-    def serve_static(self, filename):
-        """Serve arquivos estáticos da pasta static/"""
-        return static_file(filename, root='./static')
-
-
-    def render(self, template, **context):
-        """Método auxiliar para renderizar templates"""
-        from bottle import template as render_template
         return render_template(template, **context)
 
 

@@ -1,0 +1,95 @@
+/* Cabeçalho */
+h1.mt-4 {
+    font-size: 2.7rem;
+    color: #6a0dad;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.lead {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Barra de busca */
+.form-inline .form-control {
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: none;
+    width: 60%;
+    max-width: 400px;
+}
+
+.form-inline .btn-primary {
+    background: linear-gradient(to right, #5e60ce, #5390d9);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-weight: bold;
+    color: white;
+    margin-left: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Cartões */
+.card {
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: none;
+    background-color: #fff;
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.card-img-top {
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    object-fit: cover;
+    max-height: 180px;
+}
+
+.card-body {
+    padding: 1rem 1.25rem;
+}
+
+.card-title a {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #5e60ce;
+    text-decoration: none;
+}
+
+.card-title a:hover {
+    text-decoration: underline;
+}
+
+.card-body h5 {
+    font-size: 1rem;
+    color: #222;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.card-text {
+    color: #444;
+    font-size: 0.96rem;
+    margin-bottom: 0.75rem;
+}
+
+.btn-success {
+    background-color: #38b000;
+    color: white;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 25px;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.btn-success:hover {
+    background-color: #2d8800;
+}
